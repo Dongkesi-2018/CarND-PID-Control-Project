@@ -24,6 +24,7 @@ void PID::UpdateError(double cte) {
   p_error = cte;
   d_error = cte - prev_cte;
   i_error += cte;
+  prev_cte = cte;
 }
 
 double PID::TotalError() {
