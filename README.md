@@ -2,6 +2,31 @@
 Self-Driving Car Engineer Nanodegree Program
 
 ---
+## Reflection
+
+### The effect of the P, I, D component of the PID algorithm
+
+**P(Proportional)**: is proportion to the CTE. It affects the rapid response of the system error. The larger P term, the car's path will oscillate more quickly. But it doesn't guarantee a precise value.
+
+**I(Integral)**: To solve the system deviation problem, and get an accurate value. We need to use I term for fine-tuning. But the integral is a slow process, and cannot respond to oscillate and overshoot problems quickly.
+
+**D(Differential)**: To solve the oscillation problem, we need to use the differential term to predict the oscillation in advance and adjust in time.
+
+*P* undertakes the main control role, *I* helps to eliminate the residual difference, *D* in the response of the controlled object is slow, need to react at the beginning, early compensation
+
+### How to choose the final hyperparameters
+
+My final hyperparameters: **Kp=0.15, Ki = 0.00001 Kd = 1.6**.
+
+I manually adjust the parameters, each value is adjusted from 1, and then began to multiply the increase and decrease, and then fine-tuning. First, adjust from the P parameter, the car oscillate is large, and then add the D parameter, used to predict the trend of change in advance and quickly adjust. By adjusting these two parameters, I've got a value that works completely. I continued to test the I parameters, the larger I value make the system relatively poor, and finally gradually optimized, selected a relatively small value.
+I tried adjusting throttle, but the effect was not good, so I gave up this option.
+
+### Output Video
+
+
+[![Watch the video](pid.png)](https://youtu.be/6eaE1vR7fH4)
+
+
 
 ## Dependencies
 
