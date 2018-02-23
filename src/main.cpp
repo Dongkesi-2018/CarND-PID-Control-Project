@@ -45,9 +45,10 @@ int main(int argc, char *argv[])
   double Kp_t = atof(argv[4]);
   double Ki_t = atof(argv[5]);
   double Kd_t = atof(argv[6]);
+  int use_throttle = atoi(argv[7]);
   pid_t.Init(Kp_t, Ki_t, Kd_t);
 
-  h.onMessage([&pid_s, &pid_t](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
+  h.onMessage([&pid_s, &pid_t, use_throttle](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
     // The 2 signifies a websocket event
@@ -77,8 +78,14 @@ int main(int argc, char *argv[])
           if (steer_value < -1)
             steer_value = -1;
 
-          pid_t.UpdateError(speed);
-          throttle_value = pid_t.TotalError();
+          if (use_throttle != 0) {
+            pid_t.UpdateError(fabs(cte));
+            throttle_value = pid_t.TotalError(); 
+          }
+          else {
+            throttle_value = 0.3;
+          }
+
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
 
