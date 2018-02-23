@@ -37,9 +37,11 @@ int main(int argc, char *argv[])
   PID pid_s;
   PID pid_t;
   // TODO: Initialize the pid variable.
+  /*
   double Kp_s = atof(argv[1]);
   double Ki_s = atof(argv[2]);
   double Kd_s = atof(argv[3]);
+
   pid_s.Init(Kp_s, Ki_s, Kd_s);
 
   double Kp_t = atof(argv[4]);
@@ -47,6 +49,10 @@ int main(int argc, char *argv[])
   double Kd_t = atof(argv[6]);
   int use_throttle = atoi(argv[7]);
   pid_t.Init(Kp_t, Ki_t, Kd_t);
+  */
+  int use_throttle = 0;
+  pid_s.Init(0.15, 0.00001, 1.6);
+  pid_t.Init(0, 0, 0);
 
   h.onMessage([&pid_s, &pid_t, use_throttle](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
