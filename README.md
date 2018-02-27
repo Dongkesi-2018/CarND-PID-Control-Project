@@ -2,23 +2,27 @@
 Self-Driving Car Engineer Nanodegree Program
 
 ---
+## Run System
+
+Command Line: ./pid 0.15 0.00001 1.6 0 0 0 0
+
 ## Reflection
 
 ### The effect of the P, I, D component of the PID algorithm
 
-**P(Proportional)**: is proportion to the CTE. It affects the rapid response of the system error. The larger P term, the car's path will oscillate more quickly. But it doesn't guarantee a precise value.
+**P(Proportional)**: It affects the rapid response of the system error. The performance gets better as the *P* increases, but if it's too high, the car may go out of control. The *P* will cause oscillations because it makes the car overshoot the target and correct in the opposite again, so it cannot keep the system at a stable state alone.
 
-**I(Integral)**: To solve the system deviation problem, and get an accurate value. We need to use I term for fine-tuning. But the integral is a slow process, and cannot respond to oscillate and overshoot problems quickly.
+**I(Integral)**: Environmental or mechanical factors can change the car's behavior and cause system deviation problem. To solve this and get an accurate value, we need to use *I* term for fine-tuning. But the *I* also affects the stability of our entire control system. If *I* is too large, the car may become unstable. If it's too small, it may take a long time to respond to these dynamic changes, which in some cases put the car in a dangerous situation.
 
-**D(Differential)**: To solve the oscillation problem, we need to use the differential term to predict the oscillation in advance and adjust in time.
+**D(Differential)**: To solve the oscillation problem, we need to use the *D* to predict the oscillation in advance and adjust in time. The *D* brings about the resistance of the car to the opposite direction of the reference line, so as to make the movement smoother. Use large *P* and too small *D* may cause **underdamped**, where the car will oscillate along the reference line. Conversely, if the *P* is too small, and the *D* is too large, then this is called **overdamped**, the system will take a long time to correct for the offset. Appropriate choice of *P*, *D* parameters can make the car back to the reference line quickly and maintain a good movement along the reference line. 
 
-*P* undertakes the main control role, *I* helps to eliminate the residual difference, *D* in the response of the controlled object is slow, need to react at the beginning, early compensation
+In a word, *P* undertakes the main control role, make the car move toward the reference line, *I* helps to eliminate the system deviation, *D* is used for suppressing the *P*.
 
 ### How to choose the final hyperparameters
 
 My final hyperparameters: **Kp=0.15, Ki = 0.00001 Kd = 1.6**.
 
-I manually adjust the parameters, each value is adjusted from 1, and then began to multiply the increase and decrease, and then fine-tuning. First, adjust from the P parameter, the car oscillate is large, and then add the D parameter, used to predict the trend of change in advance and quickly adjust. By adjusting these two parameters, I've got a value that works completely. I continued to test the I parameters, the larger I value make the system relatively poor, and finally gradually optimized, selected a relatively small value.
+I manually adjust the parameters, each value is adjusted from 1, and then began to multiply the increase and decrease, and then fine-tuning. First, adjust from the P parameter, the others are 0, the car oscillate is large, and then add the D parameter, used to predict the trend of change in advance and quickly adjust. By adjusting these two parameters, I've got a value that works completely. I continued to test the I parameters, the larger I value make the system relatively poor, and gradually optimized, selected a relatively small value finally.
 I tried adjusting throttle, but the effect was not good, so I gave up this option.
 
 ### Output Video
